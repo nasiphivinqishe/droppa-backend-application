@@ -1,0 +1,129 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  CheckDeliveryStatus:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: com.example.handler
+      Runtime: java11
+      Code: .
+      Timeout: 10
+
+  DoDeliveryRequest:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: index.handler
+      Runtime: java11
+      Code: .
+      Timeout: 10
+
+  GetDeliveryRequestById:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: index.handler
+      Runtime: java11
+      Code: .
+      Timeout: 10
+
+  RequestPackageDelivery:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: index.handler
+      Runtime: java11
+      Code: .
+      Timeout: 10
+
+  UpdateDeliveryStatus:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: index.handler
+      Runtime: java11
+      Code: .
+      Timeout: 10
+      MemorySize: 512
+      Role:
+      Policies:
+        - PolicyName: LambdaPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "sns:Publish"
+                  - "ses:SendEmail"
+                Resource: "*"
+
+  DroppaDeliveryManagement:
+    Type: "AWS::ApiGateway::RestApi"
+    Properties:
+      Name: "DroppaDeliveryManagement"
+
+  DroppaDeliveryManagementResource:
+    Type: "AWS::ApiGateway::Resource"
+    Properties:
+      RestApiId: !Ref DroppaDeliveryManagement
+      ParentId: !GetAtt DroppaDeliveryManagement.RootResourceId
+      PathPart: "hello"
+
+  CheckDeliveryStatusMethod:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      RestApiId: !Ref DroppaDeliveryManagement
+      ResourceId: !Ref DroppaDeliveryManagementResource
+      HttpMethod: "POST"
+      AuthorizationType: "NONE"
+      Integration:
+        Type: "AWS_PROXY"
+        IntegrationHttpMethod: "POST"
+        Uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CheckDeliveryStatus.Arn}/invocations"
+
+  DoDeliveryRequestMethod:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      RestApiId: !Ref DroppaDeliveryManagement
+      ResourceId: !Ref DroppaDeliveryManagementResource
+      HttpMethod: "POST"
+      AuthorizationType: "NONE"
+      Integration:
+        Type: "AWS_PROXY"
+        IntegrationHttpMethod: "POST"
+        Uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DoDeliveryRequest.Arn}/invocations"
+
+  GetDeliveryRequestByIdMethod:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      RestApiId: !Ref DroppaDeliveryManagement
+      ResourceId: !Ref DroppaDeliveryManagementResource
+      HttpMethod: "GET"
+      AuthorizationType: "NONE"
+      Integration:
+        Type: "AWS_PROXY"
+        IntegrationHttpMethod: "POST"
+        Uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetDeliveryRequestById.Arn}/invocations"
+
+  RequestPackageDeliveryMethod:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      RestApiId: !Ref DroppaDeliveryManagement
+      ResourceId: !Ref DroppaDeliveryManagementResource
+      HttpMethod: "POST"
+      AuthorizationType: "NONE"
+      Integration:
+        Type: "AWS_PROXY"
+        IntegrationHttpMethod: "POST"
+        Uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RequestPackageDelivery.Arn}/invocations"
+
+  UpdateDeliveryStatusMethod:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      RestApiId: !Ref DroppaDeliveryManagement
+      ResourceId: !Ref DroppaDeliveryManagementResource
+      HttpMethod: "POST"
+      AuthorizationType: "NONE"
+      Integration:
+        Type: "AWS_PROXY"
+        IntegrationHttpMethod: "POST"
+        Uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdateDeliveryStatus.Arn}/invocations"

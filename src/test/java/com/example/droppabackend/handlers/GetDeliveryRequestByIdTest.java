@@ -5,10 +5,9 @@ import com.example.droppabackend.Models.PackageData;
 import com.example.droppabackend.commons.TestContext;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class GetDeliveryRequestByIdTest {
     GetDeliveryRequestById getDeliveryRequestById = new GetDeliveryRequestById();
+
     @Test
     public void getDeliveryReqById() {
         Context context = new TestContext();

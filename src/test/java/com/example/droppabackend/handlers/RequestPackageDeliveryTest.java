@@ -10,9 +10,10 @@ import java.util.Date;
 
 class RequestPackageDeliveryTest {
     RequestPackageDelivery requestPackageDelivery = new RequestPackageDelivery();
+
  @Test
     public void acceptPackage() {
-     Context context = new TestContext();
+    Context context = new TestContext();
      PackageData event = new PackageData();
 
 

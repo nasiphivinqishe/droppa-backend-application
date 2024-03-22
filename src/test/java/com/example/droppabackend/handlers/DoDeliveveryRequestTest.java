@@ -14,7 +14,7 @@ class DoDeliveveryRequestTest {
 
     @Test
     public void doDeliveryReq(){
-        Context context = new TestContext();
+        Context context =  new TestContext();
         DeliveryStatus event = new DeliveryStatus();
 
         event.setDeliveryRequestId(1);

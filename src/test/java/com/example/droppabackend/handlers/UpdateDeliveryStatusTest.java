@@ -1,8 +1,8 @@
 package com.example.droppabackend.handlers;
 
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.example.droppabackend.Models.UpdateDeliveryStatusModel;
-
 import com.example.droppabackend.commons.TestContext;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +12,9 @@ import java.util.Date;
 
 class UpdateDeliveryStatusTest {
     UpdateDeliveryStatus updateDeliveryStatus = new UpdateDeliveryStatus();
+
     @Test
-    public void updateStatus(){
+    public void updateStatus() {
         Context context = new TestContext();
         UpdateDeliveryStatusModel event = new UpdateDeliveryStatusModel();
 

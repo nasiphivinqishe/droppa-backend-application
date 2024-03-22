@@ -4,6 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.example.droppabackend.commons.TestLogger;
 
 public class TestContext implements Context{
 
@@ -38,10 +39,8 @@ public class TestContext implements Context{
     public int getMemoryLimitInMB(){
         return 512;
     }
-
-    @Override
-    public LambdaLogger getLogger() {
-        return null;
+    public LambdaLogger getLogger(){
+        return new TestLogger();
     }
 
 }
